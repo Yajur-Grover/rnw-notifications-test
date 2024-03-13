@@ -1,5 +1,9 @@
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
-
+/**
+ * Metro configuration for React Native
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
 const fs = require('fs');
 const path = require('path');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
@@ -8,14 +12,7 @@ const rnwPath = fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
 );
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-
-const config = {
+module.exports = {
   resolver: {
     blockList: exclusionList([
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
@@ -39,5 +36,3 @@ const config = {
     assetRegistryPath: 'react-native/Libraries/Image/AssetRegistry',
   },
 };
-
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
