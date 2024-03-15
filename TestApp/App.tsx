@@ -18,6 +18,8 @@ import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 
 import {showNotification} from './Notifications';
 
+const calendarInviteTemplate = 
+
 async function updateJumpListAsync(): Promise<void> {
   try {
     const StartScreenApi = Windows.UI.StartScreen;
@@ -243,6 +245,7 @@ const App = () => {
                 </Text>{' '}
                 or xperf. To view these events, use the provider GUID{' '}
                 <Text
+                  // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontFamily: 'Consolas',
                     backgroundColor: 'whitesmoke',
@@ -251,6 +254,7 @@ const App = () => {
                 </Text>
               </Text>
               <View
+                // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   paddingTop: 10,
                   flexDirection: 'row',
@@ -316,6 +320,7 @@ const App = () => {
                 Windows.UI.Notifications Example
               </Text>
               <View
+                // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   flexDirection: 'row',
                   flexWrap: 'wrap',
@@ -330,13 +335,14 @@ const App = () => {
                     showNotification({
                       template:
                         Windows.UI.Notifications.ToastTemplateType
-                          .toastImageAndText01,
+                          .toastImageAndText03,
                       // The template schema can be found at https://docs.microsoft.com/previous-versions/windows/apps/hh761494(v=win.10)
-                      text: 'hello world',
+                      text: ['hello world', 'this is the body'],
                       image: {
                         src: 'https://microsoft.github.io/react-native-windows/img/header_logo.svg',
                         alt: 'React logo',
                       },
+                      priority: 1,
                     });
                   }}>
                   <Text style={styles.sectionDescriptionButtonText}>Press</Text>
@@ -350,6 +356,21 @@ const App = () => {
                 Windows.Storage API + picturesLibrary capability Example
               </Text>
               <AsyncImage imageUriPromise={imageUriPromise} />
+            </View>
+          </View>
+          <View style={styles.body}>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>
+                {' '}
+                Toast Notification with Input
+              </Text>
+              <Pressable 
+                style={styles.sectionDescriptionButton}
+                onPress={() => {
+                  showNotification({template: })
+                }}>
+                <Text style={styles.sectionDescriptionButtonText}>Press Me</Text>
+              </Pressable>
             </View>
           </View>
         </ScrollView>

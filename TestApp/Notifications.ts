@@ -4,23 +4,24 @@ const ToastNotificationManager = Notifications.ToastNotificationManager;
 const ToastNotification = Notifications.ToastNotification;
 
 export function showNotification(notification) {
-  var type = ToastTemplateType.toastText01;
+  var type = notification.template;
 
-  var obj = {};
+  var notificationObject = {};
   if (typeof notification === 'string') {
-    obj.text = notification;
+    notificationObject.text = notification;
   } else {
-    obj = notification;
+    notificationObject = notification;
   }
 
-  if (obj.template != undefined) {
-    type = obj.template;
+  if (notificationObject.template != undefined) {
+    type = notificationObject.template;
   }
 
   var xml = ToastNotificationManager.getTemplateContent(type);
-  for (var tagName in obj) {
+  for (var tagName in notificationObject) {
     var xmlElements = xml.getElementsByTagName(tagName);
-    var value = obj[tagName];
+    var value = notificationObject[tagName];
+    console.log(tagName);
     if (typeof value === 'string') {
       fillXmlElements(xml, xmlElements, [value]);
     } else if (Array.isArray(value)) {
@@ -31,15 +32,21 @@ export function showNotification(notification) {
   }
 
   var toast = new ToastNotification(xml);
+  toast.priority = Notifications.ToastNotificationPriority.high;
   ToastNotificationManager.createToastNotifier().show(toast);
 }
+
+function createToast(notification) {
+  
+}
+
 
 function fillXmlElements(xml, xmlElements, arr) {
   var i = 0;
   for (var arrValue of arr) {
-    var node = xmlElements[i++];
+    var node = xmlElements[i];
     if (typeof arrValue === 'string') {
-      node.appendChild(xml.createTextNode(arrValue));
+      node.appendChild(xml.createTextNode(arrValue + ' \n'));
     } else if (typeof arrValue === 'object') {
       for (var attrName in arrValue) {
         var attr = node.attributes.getNamedItem(attrName);
